@@ -17,9 +17,19 @@ import {
 } from 'lucide-react';
 
 export const Footer: React.FC<{ onOpenAdmin: () => void }> = ({ onOpenAdmin }) => {
-  const { openOfflineModal, addNotification, weather, t } = useResort();
+  const { openOfflineModal, addNotification, weather, t, setCurrentSection } = useResort();
   const [newsletterEmail, setNewsletterEmail] = useState<string>('');
   const [subscribed, setSubscribed] = useState<boolean>(false);
+
+  const navigateTo = (section: string) => {
+    setCurrentSection(section);
+    try {
+      window.location.hash = '#' + section;
+    } catch {
+      // ignore
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleNewsletter = (e: React.FormEvent) => {
     e.preventDefault();
@@ -116,11 +126,11 @@ export const Footer: React.FC<{ onOpenAdmin: () => void }> = ({ onOpenAdmin }) =
               {t('accommodationsTitle', 'Accommodations')}
             </h4>
             <ul className="space-y-2.5 text-xs text-stone-400">
-              <li><a href="#rooms" className="hover:text-white transition">{t('villaTitle', 'Aninag Master Villa')}</a></li>
-              <li><a href="#rooms" className="hover:text-white transition">{t('suiteTitle', 'Alon Sunset Suite')}</a></li>
-              <li><a href="#rooms" className="hover:text-white transition">{t('deluxeTitle', 'Amihan Deluxe Garden')}</a></li>
-              <li><a href="#rooms" className="hover:text-white transition">{t('cottageTitle', 'Baybayin Beachfront Cottage')}</a></li>
-              <li><a href="#rooms" className="hover:text-white transition">{t('buyoutTitle', '12-Room Resort Buyout')}</a></li>
+              <li><button onClick={() => navigateTo('rooms')} className="hover:text-white transition cursor-pointer text-left">{t('villaTitle', 'Aninag Master Villa')}</button></li>
+              <li><button onClick={() => navigateTo('rooms')} className="hover:text-white transition cursor-pointer text-left">{t('suiteTitle', 'Alon Sunset Suite')}</button></li>
+              <li><button onClick={() => navigateTo('rooms')} className="hover:text-white transition cursor-pointer text-left">{t('deluxeTitle', 'Amihan Deluxe Garden')}</button></li>
+              <li><button onClick={() => navigateTo('rooms')} className="hover:text-white transition cursor-pointer text-left">{t('cottageTitle', 'Baybayin Beachfront Cottage')}</button></li>
+              <li><button onClick={() => navigateTo('rooms')} className="hover:text-white transition cursor-pointer text-left">{t('buyoutTitle', '12-Room Resort Buyout')}</button></li>
             </ul>
           </div>
 
@@ -130,11 +140,12 @@ export const Footer: React.FC<{ onOpenAdmin: () => void }> = ({ onOpenAdmin }) =
               {t('experiencesTitle', 'Experiences')}
             </h4>
             <ul className="space-y-2.5 text-xs text-stone-400">
-              <li><a href="#map" className="hover:text-white transition">{t('tinagongIslets', 'Tinagong Dagat Islets')}</a></li>
-              <li><a href="#map" className="hover:text-white transition">{t('campomanesDiving', 'Campomanes Wreck Diving')}</a></li>
-              <li><a href="#activities" className="hover:text-white transition">{t('acousticBonfires', 'Nightly Acoustic Bonfires')}</a></li>
-              <li><a href="#dining" className="hover:text-white transition">{t('sunsetDeckDining', 'Sunset Deck Negrense Dining')}</a></li>
-              <li><a href="#loyalty" className="hover:text-white transition">{t('glowClubLoyalty', 'Glow Club Loyalty Rewards')}</a></li>
+              <li><button onClick={() => navigateTo('experiences')} className="hover:text-white transition cursor-pointer text-left">{t('dayglowTitle', 'The Aninag Dayglow & Kayak')}</button></li>
+              <li><button onClick={() => navigateTo('experiences')} className="hover:text-white transition cursor-pointer text-left">{t('tinagongIslets', 'Tinagong Dagat Islets')}</button></li>
+              <li><button onClick={() => navigateTo('experiences')} className="hover:text-white transition cursor-pointer text-left">{t('campomanesDiving', 'Campomanes Wreck Diving')}</button></li>
+              <li><button onClick={() => navigateTo('experiences')} className="hover:text-white transition cursor-pointer text-left">{t('acousticBonfires', 'Nightly Acoustic Bonfires')}</button></li>
+              <li><button onClick={() => navigateTo('dining')} className="hover:text-white transition cursor-pointer text-left">{t('sunsetDeckDining', 'Sunset Deck Negrense Dining')}</button></li>
+              <li><button onClick={() => navigateTo('reviews')} className="hover:text-white transition cursor-pointer text-left">{t('glowClubLoyalty', 'Glow Club Loyalty Rewards')}</button></li>
             </ul>
           </div>
 
@@ -154,14 +165,30 @@ export const Footer: React.FC<{ onOpenAdmin: () => void }> = ({ onOpenAdmin }) =
                 </button>
               </li>
               <li>
-                <a href="#map" className="hover:text-white transition">
-                  {t('interactiveMap', 'Interactive Sipalay Map')}
-                </a>
+                <button
+                  onClick={() => navigateTo('location')}
+                  className="hover:text-white transition cursor-pointer text-left flex items-center gap-1.5"
+                >
+                  <MapPin className="w-3.5 h-3.5 text-[#83C5BE]" />
+                  <span>{t('interactiveMap', 'Interactive Sipalay Map')}</span>
+                </button>
               </li>
               <li>
-                <a href="#reviews" className="hover:text-white transition">
+                <button
+                  onClick={() => navigateTo('reviews')}
+                  className="hover:text-white transition cursor-pointer text-left"
+                >
                   {t('guestWall', '#GlowAtAlon Guest Wall')}
-                </a>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => navigateTo('contact')}
+                  className="hover:text-white transition cursor-pointer text-left flex items-center gap-1.5"
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#83C5BE]" />
+                  <span>{t('contactUs', 'Contact Front Desk')}</span>
+                </button>
               </li>
               <li>
                 <button

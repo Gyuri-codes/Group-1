@@ -55,15 +55,15 @@ export const LiveChatWidget: React.FC = () => {
       {!isChatOpen && (
         <button
           onClick={toggleChat}
-          className="relative group p-4 rounded-full bg-[#2C241D] hover:bg-[#1E1712] text-white shadow-2xl transition-all duration-300 transform hover:scale-105 cursor-pointer border-2 border-[#E4A853] flex items-center gap-2"
+          className="relative group px-4 py-3 sm:px-5 sm:py-3.5 rounded-full bg-[#1A1A1A] hover:bg-stone-900 text-white shadow-2xl transition-all duration-300 transform hover:scale-105 cursor-pointer border border-stone-700 flex items-center gap-2"
           aria-label={t('openChatAria', 'Open 24/7 Live Concierge Chat')}
         >
-          <MessageCircle className="w-6 h-6 text-[#E4A853]" />
-          <span className="hidden sm:inline text-xs font-bold tracking-wide pr-1">
-            {t('chatWithConcierge', 'Chat with Sipalay Concierge')}
+          <MessageCircle className="w-5 h-5 text-[#E4A853]" />
+          <span className="text-xs font-semibold tracking-wide pr-1">
+            {t('chatWithConcierge', 'Chat with Concierge')}
           </span>
           {/* Active status pulse */}
-          <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#2A9D8F] border-2 border-white flex items-center justify-center text-[9px] font-bold">
+          <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#2A9D8F] border-2 border-white flex items-center justify-center text-[9px] font-bold text-white">
             1
           </span>
         </button>

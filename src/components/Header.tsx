@@ -64,24 +64,24 @@ export const Header: React.FC<{
 
   const navItems = [
     { id: 'home', label: t('navHome', 'Home') },
-    { id: 'dayglow', label: `${t('navExperiences', 'Dayglow & Kayak')} ✨` },
     { id: 'rooms', label: t('navRooms', 'Rooms & Suites') },
+    { id: 'experiences', label: t('navExperiences', 'Dayglow & Activities') },
     { id: 'dining', label: t('navDining', 'Dining & Bar') },
-    { id: 'activities', label: t('navActivities', 'Activities & Tours') },
-    { id: 'gallery', label: t('navGallery', 'Gallery') },
-    { id: 'competitors', label: t('navMap', 'Competitors & Map') },
-    { id: 'reviews', label: t('navReviews', 'Reviews') },
-    { id: 'loyalty', label: t('navLoyalty', 'Glow Club') },
-    { id: 'about', label: t('navAbout', 'About') }
+    { id: 'gallery', label: t('navGallery', 'Gallery & 360°') },
+    { id: 'location', label: t('navMap', 'Location & Map') },
+    { id: 'reviews', label: t('navLoyalty', 'Glow Club & Reviews') },
+    { id: 'contact', label: t('navContact', 'Contact & Info') }
   ];
 
   const handleNavClick = (id: string) => {
     setCurrentSection(id);
     setIsMobileMenuOpen(false);
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+    try {
+      window.location.hash = '#' + id;
+    } catch {
+      // ignore
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const languagesList: { code: LanguageCode; label: string; flag: string }[] = [
@@ -173,25 +173,8 @@ export const Header: React.FC<{
             </div>
           </div>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden xl:flex items-center space-x-6 text-xs sm:text-sm font-medium uppercase tracking-wider">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => handleNavClick(item.id)}
-                className={`py-1 transition-colors cursor-pointer ${
-                  currentSection === item.id 
-                    ? 'border-b-2 border-[#006D77] text-[#006D77] font-bold' 
-                    : 'text-stone-600 hover:text-[#006D77]'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-          </nav>
-
           {/* Action Tools & Booking CTA */}
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Search Input Trigger */}
             <div className="relative">
               {isSearchOpen ? (
@@ -454,10 +437,10 @@ export const Header: React.FC<{
               <span>{t('bookNow', 'Book Now')}</span>
             </button>
 
-            {/* Mobile Menu Toggle Button */}
+            {/* Menu Toggle Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="xl:hidden p-2 rounded-md text-stone-700 hover:bg-stone-100 transition cursor-pointer"
+              className="p-2 rounded-md text-stone-700 hover:bg-stone-100 transition cursor-pointer"
               aria-label="Toggle navigation"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
@@ -466,9 +449,9 @@ export const Header: React.FC<{
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Menu Drawer */}
       {isMobileMenuOpen && (
-        <div className="xl:hidden bg-white border-b border-stone-200 px-4 pt-2 pb-6 space-y-3 animate-fadeIn shadow-lg">
+        <div className="bg-white border-b border-stone-200 px-4 pt-2 pb-6 space-y-3 animate-fadeIn shadow-lg">
           {/* User Auth Banner in Mobile Menu */}
           <div className="p-3 rounded-xl bg-stone-50 border border-stone-200">
             {currentUser ? (
