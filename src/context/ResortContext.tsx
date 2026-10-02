@@ -592,6 +592,9 @@ export const ResortProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   useEffect(() => {
     safeSetItem('alon_aninag_language', language);
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = language;
+    }
   }, [language]);
 
   useEffect(() => {
@@ -677,15 +680,25 @@ export const ResortProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   // Translation helper
   const t = (key: string, defaultText?: string): string => {
-    // Check TRANSLATIONS first
+    // Check TRANSLATIONS first for exact key
     const transDict = TRANSLATIONS[language];
     if (transDict && transDict[key]) return transDict[key];
 
-    // Check UI_DICTIONARY
+    // Check UI_DICTIONARY for exact key
     const langDict = UI_DICTIONARY[language];
     if (langDict && langDict[key]) return langDict[key];
 
+    // Also check if defaultText exists as a key in either dictionary
+    if (defaultText) {
+      if (transDict && transDict[defaultText]) return transDict[defaultText];
+      if (langDict && langDict[defaultText]) return langDict[defaultText];
+    }
+
     // Fallbacks to English
+    if (language === 'en') {
+      return (transDict && transDict[key]) || (langDict && langDict[key]) || defaultText || key;
+    }
+
     if (TRANSLATIONS.en && TRANSLATIONS.en[key]) return TRANSLATIONS.en[key];
     if (UI_DICTIONARY.en && UI_DICTIONARY.en[key]) return UI_DICTIONARY.en[key];
 

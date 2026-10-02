@@ -3,6 +3,16 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 
+// Global error diagnosis handlers
+if (typeof window !== 'undefined') {
+  window.addEventListener('error', (event) => {
+    console.error('[Alon Aninag Global Error]:', event.error || event.message);
+  });
+  window.addEventListener('unhandledrejection', (event) => {
+    console.error('[Alon Aninag Unhandled Rejection]:', event.reason);
+  });
+}
+
 interface ErrorBoundaryProps {
   children: ReactNode;
 }
@@ -40,15 +50,30 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
             <p className="text-sm text-stone-600 mb-6 leading-relaxed">
               We encountered a slight hiccup loading the resort experience. Please refresh to continue your tropical getaway.
             </p>
-            <button
-              onClick={() => {
-                localStorage.clear();
-                window.location.reload();
-              }}
-              className="px-6 py-2.5 bg-[#006D77] hover:bg-[#00555d] text-white rounded-md text-xs uppercase tracking-widest font-bold transition shadow-sm cursor-pointer"
-            >
-              Reload Experience
-            </button>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <button
+                onClick={() => {
+                  window.location.reload();
+                }}
+                className="px-6 py-2.5 bg-[#006D77] hover:bg-[#00555d] text-white rounded-md text-xs uppercase tracking-widest font-bold transition shadow-sm cursor-pointer"
+              >
+                Reload Website
+              </button>
+              <button
+                onClick={() => {
+                  try {
+                    localStorage.removeItem('alon_aninag_reservations');
+                    localStorage.removeItem('alon_aninag_user');
+                  } catch {
+                    // ignore
+                  }
+                  window.location.reload();
+                }}
+                className="px-4 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-md text-xs uppercase tracking-widest font-medium transition cursor-pointer"
+              >
+                Reset Cache
+              </button>
+            </div>
           </div>
         </div>
       );

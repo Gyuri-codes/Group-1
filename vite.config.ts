@@ -5,6 +5,9 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    // Relative base ensures asset URLs (js, css, images) load properly
+    // on GitHub Pages sub-paths (e.g. /Group-1/), custom domains, and Vercel
+    base: './',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {

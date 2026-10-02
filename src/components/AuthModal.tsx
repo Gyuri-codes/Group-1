@@ -25,7 +25,8 @@ export const AuthModal: React.FC = () => {
     loginUser,
     authLoading,
     authError,
-    clearAuthError
+    clearAuthError,
+    t
   } = useResort();
 
   const [email, setEmail] = useState<string>('');
@@ -42,7 +43,6 @@ export const AuthModal: React.FC = () => {
     try {
       await loginWithGoogle();
     } catch (err: any) {
-      // Error handled in context or captured here
       console.warn('Google sign-in attempt:', err);
     }
   };
@@ -52,12 +52,12 @@ export const AuthModal: React.FC = () => {
     setLocalError(null);
 
     if (!email || !password) {
-      setLocalError('Please enter both email and password.');
+      setLocalError(t('enterEmailPasswordError', 'Please enter both email and password.'));
       return;
     }
 
     if (password.length < 6) {
-      setLocalError('Password must be at least 6 characters.');
+      setLocalError(t('passwordMin6Error', 'Password must be at least 6 characters.'));
       return;
     }
 
@@ -87,7 +87,7 @@ export const AuthModal: React.FC = () => {
         <button
           onClick={closeAuthModal}
           className="absolute top-5 right-5 p-2 rounded-full bg-[#FAF7F2] text-[#4A3E31] hover:bg-[#EDE4D3] transition cursor-pointer"
-          aria-label="Close authentication modal"
+          aria-label={t('closeModal', 'Close modal')}
         >
           <X className="w-4 h-4" />
         </button>
@@ -99,12 +99,12 @@ export const AuthModal: React.FC = () => {
           </div>
           <div>
             <h3 className="font-serif text-xl font-bold text-[#2C241D]">
-              {authModalMode === 'login' ? 'Welcome Back to Alon' : 'Join Alon Glow Club'}
+              {authModalMode === 'login' ? t('welcomeBackAlon', 'Welcome Back to Alon') : t('joinAlonGlowClub', 'Join Alon Glow Club')}
             </h3>
             <p className="text-xs text-[#7A6A58]">
               {authModalMode === 'login' 
-                ? 'Access your cloud reservations & Glow rewards' 
-                : 'Earn 350 bonus points upon registration & 10% off'}
+                ? t('accessCloudReservations', 'Access your cloud reservations & Glow rewards') 
+                : t('earn350PointsOff', 'Earn 350 bonus points upon registration & 10% off')}
             </p>
           </div>
         </div>
@@ -139,7 +139,7 @@ export const AuthModal: React.FC = () => {
                 />
               </svg>
             )}
-            <span>Continue with Google</span>
+            <span>{t('continueWithGoogle', 'Continue with Google')}</span>
           </button>
         </div>
 
@@ -147,7 +147,7 @@ export const AuthModal: React.FC = () => {
         <div className="relative flex py-2 items-center mb-4">
           <div className="grow border-t border-stone-200"></div>
           <span className="shrink mx-3 text-[11px] text-stone-400 uppercase font-medium tracking-wider">
-            or with email
+            {t('orWithEmail', 'or with email')}
           </span>
           <div className="grow border-t border-stone-200"></div>
         </div>
@@ -183,7 +183,7 @@ export const AuthModal: React.FC = () => {
             }}
             className={`py-2 rounded-lg transition cursor-pointer ${authModalMode === 'login' ? 'bg-white text-[#2C241D] shadow-xs' : 'hover:text-[#2C241D]'}`}
           >
-            Sign In
+            {t('signIn', 'Sign In')}
           </button>
           <button
             type="button"
@@ -194,7 +194,7 @@ export const AuthModal: React.FC = () => {
             }}
             className={`py-2 rounded-lg transition cursor-pointer ${authModalMode === 'signup' ? 'bg-white text-[#2C241D] shadow-xs' : 'hover:text-[#2C241D]'}`}
           >
-            Create Account
+            {t('createAccount', 'Create Account')}
           </button>
         </div>
 
@@ -203,7 +203,7 @@ export const AuthModal: React.FC = () => {
           {authModalMode === 'signup' && (
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block font-bold text-[#6B5A48] mb-1 uppercase text-[10px]">First Name</label>
+                <label className="block font-bold text-[#6B5A48] mb-1 uppercase text-[10px]">{t('firstName', 'First Name')}</label>
                 <div className="relative">
                   <User className="w-3.5 h-3.5 absolute left-3 top-3 text-stone-400" />
                   <input
@@ -217,7 +217,7 @@ export const AuthModal: React.FC = () => {
                 </div>
               </div>
               <div>
-                <label className="block font-bold text-[#6B5A48] mb-1 uppercase text-[10px]">Last Name</label>
+                <label className="block font-bold text-[#6B5A48] mb-1 uppercase text-[10px]">{t('lastName', 'Last Name')}</label>
                 <input
                   type="text"
                   placeholder="e.g. Santos"
@@ -231,7 +231,7 @@ export const AuthModal: React.FC = () => {
           )}
 
           <div>
-            <label className="block font-bold text-[#6B5A48] mb-1 uppercase text-[10px]">Email Address</label>
+            <label className="block font-bold text-[#6B5A48] mb-1 uppercase text-[10px]">{t('emailAddress', 'Email Address')}</label>
             <div className="relative">
               <Mail className="w-3.5 h-3.5 absolute left-3 top-3 text-stone-400" />
               <input
@@ -246,12 +246,12 @@ export const AuthModal: React.FC = () => {
           </div>
 
           <div>
-            <label className="block font-bold text-[#6B5A48] mb-1 uppercase text-[10px]">Password</label>
+            <label className="block font-bold text-[#6B5A48] mb-1 uppercase text-[10px]">{t('password', 'Password')}</label>
             <div className="relative">
               <Lock className="w-3.5 h-3.5 absolute left-3 top-3 text-stone-400" />
               <input
                 type="password"
-                placeholder="At least 6 characters"
+                placeholder={t('passwordPlaceholder', 'At least 6 characters')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full pl-8 pr-3 py-2.5 bg-[#FAF7F2] border border-[#DDD0B9] rounded-xl text-[#2C241D] font-medium focus:ring-1 focus:ring-[#006D77] focus:outline-hidden"
@@ -262,7 +262,7 @@ export const AuthModal: React.FC = () => {
 
           {authModalMode === 'signup' && (
             <div>
-              <label className="block font-bold text-[#6B5A48] mb-1 uppercase text-[10px]">Mobile Phone</label>
+              <label className="block font-bold text-[#6B5A48] mb-1 uppercase text-[10px]">{t('mobilePhone', 'Mobile Phone')}</label>
               <div className="relative">
                 <Phone className="w-3.5 h-3.5 absolute left-3 top-3 text-stone-400" />
                 <input
@@ -283,7 +283,7 @@ export const AuthModal: React.FC = () => {
           >
             {authLoading && <Loader2 className="w-4 h-4 animate-spin text-[#E4A853]" />}
             <span>
-              {authModalMode === 'login' ? 'Sign In to Glow Account' : 'Register & Claim 350 Glow Pts'}
+              {authModalMode === 'login' ? t('signInGlowAccount', 'Sign In to Glow Account') : t('registerClaim350', 'Register & Claim 350 Glow Pts')}
             </span>
           </button>
         </form>
@@ -291,7 +291,7 @@ export const AuthModal: React.FC = () => {
         {/* Quick Demo Login Preset Buttons */}
         <div className="mt-4 pt-3 border-t border-[#EFE8DC]">
           <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest text-center mb-2">
-            Quick Demo Accounts
+            {t('quickDemoAccounts', 'Quick Demo Accounts')}
           </p>
           <div className="grid grid-cols-3 gap-1.5 text-[11px]">
             <button
@@ -302,7 +302,7 @@ export const AuthModal: React.FC = () => {
               }}
               className="py-1.5 px-2 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-medium transition cursor-pointer text-center"
             >
-              Guest 🏖️
+              {t('guest', 'Guest')} 🏖️
             </button>
             <button
               type="button"
@@ -312,7 +312,7 @@ export const AuthModal: React.FC = () => {
               }}
               className="py-1.5 px-2 rounded-lg bg-teal-50 hover:bg-teal-100 text-[#006D77] font-medium transition cursor-pointer text-center"
             >
-              Staff 🔑
+              {t('staff', 'Staff')} 🔑
             </button>
             <button
               type="button"
@@ -322,7 +322,7 @@ export const AuthModal: React.FC = () => {
               }}
               className="py-1.5 px-2 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 font-medium transition cursor-pointer text-center"
             >
-              Admin 👑
+              {t('admin', 'Admin')} 👑
             </button>
           </div>
         </div>
@@ -330,7 +330,7 @@ export const AuthModal: React.FC = () => {
         {/* Member Perk snippet */}
         <div className="mt-4 pt-3 border-t border-[#EFE8DC] text-[11px] text-[#6B5A48] flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-[#E4A853] shrink-0" />
-          <span>Members enjoy 10% lower rates, free welcome sunset cocktail & cloud reservation sync.</span>
+          <span>{t('memberPerksSnippet', 'Members enjoy 10% lower rates, free welcome sunset cocktail & cloud reservation sync.')}</span>
         </div>
       </div>
     </div>

@@ -216,7 +216,7 @@ export const Header: React.FC<{
                 <button
                   onClick={() => setIsSearchOpen(true)}
                   className="p-2 rounded-md text-stone-600 hover:text-[#006D77] hover:bg-stone-100 transition cursor-pointer"
-                  title="Search Resort"
+                  title={t('searchResort', 'Search Resort')}
                 >
                   <Search className="w-4 h-4" />
                 </button>
@@ -233,7 +233,7 @@ export const Header: React.FC<{
                   setIsUserMenuOpen(false);
                 }}
                 className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-stone-200 bg-stone-50 hover:bg-white text-xs font-semibold text-stone-700 transition cursor-pointer shadow-xs"
-                title="Change Currency"
+                title={t('selectCurrency', 'Select Currency')}
               >
                 <Coins className="w-3.5 h-3.5 text-[#006D77]" />
                 <span className="uppercase">{currency}</span>
@@ -242,7 +242,7 @@ export const Header: React.FC<{
               {isCurrencyDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-stone-200 py-1 z-50 animate-fadeIn">
                   <div className="px-3 py-1.5 border-b border-stone-100 text-[10px] font-bold text-stone-400 uppercase tracking-widest">
-                    Select Currency
+                    {t('selectCurrency', 'Select Currency')}
                   </div>
                   {Object.entries(CURRENCY_RATES).map(([code, data]) => (
                     <button
@@ -336,9 +336,9 @@ export const Header: React.FC<{
                 <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-xl shadow-2xl border border-stone-200 p-3 z-50 animate-fadeIn">
                   <div className="flex items-center justify-between pb-2 mb-2 border-b border-stone-100">
                     <span className="text-xs font-bold uppercase tracking-wider text-[#006D77]">
-                      Notifications & Updates
+                      {t('notificationsTitle', 'Notifications & Updates')}
                     </span>
-                    <span className="text-[11px] text-stone-400">{notifications.length} alerts</span>
+                    <span className="text-[11px] text-stone-400">{notifications.length} {t('alerts', 'alerts')}</span>
                   </div>
                   <div className="max-h-72 overflow-y-auto space-y-2">
                     {notifications.map((notif) => (
@@ -383,7 +383,7 @@ export const Header: React.FC<{
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-stone-300 bg-white hover:bg-stone-50 text-xs font-semibold text-stone-700 transition cursor-pointer shadow-xs"
                 >
                   <User className="w-3.5 h-3.5 text-[#006D77]" />
-                  <span className="uppercase tracking-wider text-[11px]">Sign In</span>
+                  <span className="uppercase tracking-wider text-[11px]">{t('signIn', 'Sign In')}</span>
                 </button>
               )}
 
@@ -393,7 +393,7 @@ export const Header: React.FC<{
                     <p className="font-bold text-sm text-stone-900">{currentUser.name || 'Alon Guest'}</p>
                     <p className="text-xs text-stone-500 truncate">{currentUser.email || 'No email associated'}</p>
                     <div className="mt-2 flex items-center justify-between text-xs bg-stone-50 p-2 rounded-md border border-stone-200">
-                      <span className="text-stone-600">Glow Tier:</span>
+                      <span className="text-stone-600">{t('glowTier', 'Glow Tier')}:</span>
                       <span className="font-bold text-[#006D77]">{currentUser.loyaltyTier || 'Wave'} ({currentUser.loyaltyPoints ?? 350} pts)</span>
                     </div>
                   </div>
@@ -407,7 +407,7 @@ export const Header: React.FC<{
                       className="w-full text-left px-3 py-2 text-xs font-medium text-stone-700 hover:bg-stone-50 rounded transition flex items-center gap-2 cursor-pointer"
                     >
                       <Calendar className="w-3.5 h-3.5 text-[#006D77]" />
-                      My Bookings & E-Vouchers
+                      {t('myBookingsEvouchers', 'My Bookings & E-Vouchers')}
                     </button>
                     <button
                       onClick={() => {
@@ -417,7 +417,7 @@ export const Header: React.FC<{
                       className="w-full text-left px-3 py-2 text-xs font-medium text-stone-700 hover:bg-stone-50 rounded transition flex items-center gap-2 cursor-pointer"
                     >
                       <Sparkles className="w-3.5 h-3.5 text-[#E29578]" />
-                      Glow Club Loyalty Rewards
+                      {t('glowClubRewards', 'Glow Club Loyalty Rewards')}
                     </button>
                     <button
                       onClick={() => {
@@ -427,7 +427,7 @@ export const Header: React.FC<{
                       className="w-full text-left px-3 py-2 text-xs font-medium text-stone-700 hover:bg-stone-50 rounded transition flex items-center gap-2 cursor-pointer"
                     >
                       <Bookmark className="w-3.5 h-3.5 text-[#006D77]" />
-                      Saved Sipalay Itinerary
+                      {t('savedItinerary', 'Saved Sipalay Itinerary')}
                     </button>
                     <div className="pt-2 mt-2 border-t border-stone-100">
                       <button
@@ -437,7 +437,7 @@ export const Header: React.FC<{
                         }}
                         className="w-full text-left px-3 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded transition cursor-pointer"
                       >
-                        Log Out
+                        {t('logOut', 'Log Out')}
                       </button>
                     </div>
                   </div>
@@ -494,14 +494,14 @@ export const Header: React.FC<{
                   }}
                   className="text-[11px] text-rose-600 font-semibold px-2 py-1 bg-white rounded border border-rose-200 hover:bg-rose-50 cursor-pointer"
                 >
-                  Log Out
+                  {t('logOut', 'Log Out')}
                 </button>
               </div>
             ) : (
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-bold text-xs text-stone-900">Alon Glow Club</p>
-                  <p className="text-[11px] text-stone-500">Sign in for cloud sync & 10% discount</p>
+                  <p className="font-bold text-xs text-stone-900">{t('alonGlowClub', 'Alon Glow Club')}</p>
+                  <p className="text-[11px] text-stone-500">{t('signInForPerks', 'Sign in for cloud sync & 10% discount')}</p>
                 </div>
                 <button
                   type="button"
@@ -511,7 +511,7 @@ export const Header: React.FC<{
                   }}
                   className="px-3 py-1.5 bg-[#006D77] hover:bg-[#00575F] text-white text-xs font-semibold rounded-lg shadow-xs transition cursor-pointer"
                 >
-                  Sign In
+                  {t('signIn', 'Sign In')}
                 </button>
               </div>
             )}

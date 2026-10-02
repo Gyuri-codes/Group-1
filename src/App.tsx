@@ -20,7 +20,7 @@ import { AdminDashboard } from './components/AdminDashboard';
 import { WifiOff, Sparkles, MapPin } from 'lucide-react';
 
 const ResortAppContent: React.FC = () => {
-  const { isOfflineMode, toggleOfflineMode, weather } = useResort();
+  const { isOfflineMode, toggleOfflineMode, weather, t } = useResort();
   const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
   const [isVirtualTourOpen, setIsVirtualTourOpen] = useState<boolean>(false);
   const [isDayglowModalOpen, setIsDayglowModalOpen] = useState<boolean>(false);
@@ -40,14 +40,14 @@ const ResortAppContent: React.FC = () => {
             <span className="flex items-center gap-2">
               <WifiOff className="w-4 h-4 text-[#83C5BE] animate-pulse" />
               <span>
-                <strong>Offline Travel Mode Active:</strong> All your reservations, itineraries, and emergency guides are loaded locally.
+                <strong>{t('offlineBannerTitle', 'Offline Travel Mode Active')}:</strong> {t('offlineBannerDesc', 'All your reservations, itineraries, and emergency guides are loaded locally.')}
               </span>
             </span>
             <button
               onClick={toggleOfflineMode}
               className="text-[11px] bg-white/20 hover:bg-white/30 px-3 py-1 rounded-sm uppercase tracking-wider font-bold transition cursor-pointer"
             >
-              Resume Online
+              {t('resumeOnline', 'Resume Online')}
             </button>
           </div>
         </div>

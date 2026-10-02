@@ -30,7 +30,8 @@ export const AdminDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) =
     updateBookingStatus, 
     weather, 
     currentUser, 
-    addNotification 
+    addNotification,
+    t
   } = useResort();
 
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -66,7 +67,7 @@ export const AdminDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) =
     a.href = url;
     a.download = `Alon_Aninag_Guest_Manifest_${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
-    addNotification('CSV Exported', 'Guest manifest spreadsheet generated and downloaded.', 'booking');
+    addNotification(t('csvExportedTitle', 'CSV Exported'), t('csvExportedDesc', 'Guest manifest spreadsheet generated and downloaded.'), 'booking');
   };
 
   return (
@@ -79,13 +80,13 @@ export const AdminDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) =
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="font-serif text-lg font-bold">Alon Aninag Resort Manager Portal</h1>
+              <h1 className="font-serif text-lg font-bold">{t('adminPortalTitle', 'Alon Aninag Resort Manager Portal')}</h1>
               <span className="text-[10px] bg-[#E4A853] text-[#2C241D] font-bold px-2 py-0.5 rounded-full uppercase">
-                Admin Console
+                {t('adminConsoleBadge', 'Admin Console')}
               </span>
             </div>
             <p className="text-xs text-[#DDD0B9]">
-              Poblacion Beach, Sipalay City • Logged in as: {currentUser?.name || 'Duty General Manager'}
+              {t('adminLocation', 'Poblacion Beach, Sipalay City')} • {t('loggedInAs', 'Logged in as')}: {currentUser?.name || t('dutyManager', 'Duty General Manager')}
             </p>
           </div>
         </div>
@@ -96,7 +97,7 @@ export const AdminDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) =
             className="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer border border-white/20"
           >
             <Download className="w-3.5 h-3.5 text-[#E4A853]" />
-            <span className="hidden sm:inline">Export Guest Manifest</span>
+            <span className="hidden sm:inline">{t('exportManifest', 'Export Guest Manifest')}</span>
           </button>
 
           <button
@@ -104,7 +105,7 @@ export const AdminDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) =
             className="px-4 py-1.5 rounded-xl bg-[#E4A853] hover:bg-[#D49843] text-[#2C241D] text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-xs"
           >
             <LogOut className="w-3.5 h-3.5" />
-            <span>Return to Public Website</span>
+            <span>{t('returnToWebsite', 'Return to Public Website')}</span>
           </button>
         </div>
       </header>
@@ -115,53 +116,53 @@ export const AdminDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) =
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           <div className="bg-white p-5 rounded-3xl border border-[#E5DAC4] shadow-xs">
             <div className="flex items-center justify-between text-xs text-[#8C7B68] mb-2">
-              <span className="font-bold uppercase tracking-wider">Total Season Revenue</span>
+              <span className="font-bold uppercase tracking-wider">{t('totalRevenue', 'Total Season Revenue')}</span>
               <TrendingUp className="w-4 h-4 text-[#2A9D8F]" />
             </div>
             <div className="font-serif text-2xl sm:text-3xl font-bold text-[#2C241D]">
               {formatPrice(totalRevenuePHP)}
             </div>
             <span className="text-[11px] text-[#2A9D8F] font-semibold mt-1 block">
-              +18.4% vs last Sipalay dry season
+              {t('revenueIncrease', '+18.4% vs last Sipalay dry season')}
             </span>
           </div>
 
           <div className="bg-white p-5 rounded-3xl border border-[#E5DAC4] shadow-xs">
             <div className="flex items-center justify-between text-xs text-[#8C7B68] mb-2">
-              <span className="font-bold uppercase tracking-wider">Active Reservations</span>
+              <span className="font-bold uppercase tracking-wider">{t('activeReservations', 'Active Reservations')}</span>
               <Calendar className="w-4 h-4 text-[#C88A32]" />
             </div>
             <div className="font-serif text-2xl sm:text-3xl font-bold text-[#2C241D]">
-              {reservations.length} Bookings
+              {reservations.length} {t('bookings', 'Bookings')}
             </div>
             <span className="text-[11px] text-[#8C7B68] mt-1 block">
-              {confirmedCount} Confirmed • {checkedInCount} In-House
+              {confirmedCount} {t('confirmed', 'Confirmed')} • {checkedInCount} {t('inHouse', 'In-House')}
             </span>
           </div>
 
           <div className="bg-white p-5 rounded-3xl border border-[#E5DAC4] shadow-xs">
             <div className="flex items-center justify-between text-xs text-[#8C7B68] mb-2">
-              <span className="font-bold uppercase tracking-wider">Occupancy Rate</span>
+              <span className="font-bold uppercase tracking-wider">{t('occupancyRate', 'Occupancy Rate')}</span>
               <BedDouble className="w-4 h-4 text-[#508991]" />
             </div>
             <div className="font-serif text-2xl sm:text-3xl font-bold text-[#2C241D]">
               91.6%
             </div>
             <span className="text-[11px] text-[#508991] font-semibold mt-1 block">
-              11 of 12 Boutique Rooms Occupied
+              {t('roomsOccupiedStat', '11 of 12 Boutique Rooms Occupied')}
             </span>
           </div>
 
           <div className="bg-white p-5 rounded-3xl border border-[#E5DAC4] shadow-xs">
             <div className="flex items-center justify-between text-xs text-[#8C7B68] mb-2">
-              <span className="font-bold uppercase tracking-wider">Sipalay Coast Conditions</span>
+              <span className="font-bold uppercase tracking-wider">{t('coastConditions', 'Sipalay Coast Conditions')}</span>
               <Sun className="w-4 h-4 text-[#E4A853]" />
             </div>
             <div className="font-serif text-2xl sm:text-3xl font-bold text-[#2C241D]">
-              {weather.tempC}°C • {weather.condition}
+              {weather.tempC}°C • {t(weather.condition, weather.condition)}
             </div>
             <span className="text-[11px] text-[#8C7B68] mt-1 block">
-              Sunset: {weather.sunsetTime} • Low Tide Diving: Perfect
+              {t('sunsetPrefix', 'Sunset')}: {weather.sunsetTime} • {t('tideDiving', 'Low Tide Diving: Perfect')}
             </span>
           </div>
         </div>
@@ -171,12 +172,12 @@ export const AdminDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) =
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="font-serif text-lg font-bold text-[#2C241D]">
-                Room Inventory & Housekeeping Status (12 Rooms Total)
+                {t('roomInventoryStatus', 'Room Inventory & Housekeeping Status (12 Rooms Total)')}
               </h3>
-              <p className="text-xs text-[#8C7B68]">Real-time room occupancy and turn-down status</p>
+              <p className="text-xs text-[#8C7B68]">{t('roomInventoryDesc', 'Real-time room occupancy and turn-down status')}</p>
             </div>
             <span className="text-xs font-bold text-[#2A9D8F] bg-[#2A9D8F]/10 px-3 py-1 rounded-full">
-              Full Front Desk Sync
+              {t('frontDeskSync', 'Full Front Desk Sync')}
             </span>
           </div>
 
@@ -193,12 +194,12 @@ export const AdminDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) =
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <span className="font-bold text-[#2C241D]">Room {idx + 101}</span>
+                    <span className="font-bold text-[#2C241D]">{t('roomLabel', 'Room')} {idx + 101}</span>
                     <span className={`w-2 h-2 rounded-full ${isOccupied ? 'bg-[#C88A32]' : 'bg-green-500'}`} />
                   </div>
-                  <p className="text-[11px] font-medium text-[#6B5A48] truncate">{room.name}</p>
+                  <p className="text-[11px] font-medium text-[#6B5A48] truncate">{t(room.name, room.name)}</p>
                   <span className={`text-[10px] font-bold block mt-1.5 ${isOccupied ? 'text-[#C88A32]' : 'text-green-700'}`}>
-                    {isOccupied ? 'Occupied (Checked In)' : 'Ready for Guest'}
+                    {isOccupied ? t('occupiedCheckedIn', 'Occupied (Checked In)') : t('readyForGuest', 'Ready for Guest')}
                   </span>
                 </div>
               );
@@ -211,10 +212,10 @@ export const AdminDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) =
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <h3 className="font-serif text-xl font-bold text-[#2C241D]">
-                Guest Reservations & E-Vouchers Log
+                {t('reservationsLogTitle', 'Guest Reservations & E-Vouchers Log')}
               </h3>
               <p className="text-xs text-[#8C7B68]">
-                Search, inspect voucher details, or update check-in status
+                {t('reservationsLogDesc', 'Search, inspect voucher details, or update check-in status')}
               </p>
             </div>
 
@@ -226,7 +227,7 @@ export const AdminDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) =
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search reference, guest name, room..."
+                  placeholder={t('searchReservationsPlaceholder', 'Search reference, guest name, room...')}
                   className="pl-8 pr-3 py-1.5 bg-[#FAF7F2] border border-[#DDD0B9] rounded-xl text-xs text-[#2C241D] w-64"
                 />
               </div>
@@ -237,11 +238,11 @@ export const AdminDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) =
                 onChange={(e) => setFilterStatus(e.target.value)}
                 className="px-3 py-1.5 bg-[#FAF7F2] border border-[#DDD0B9] rounded-xl text-xs text-[#2C241D] font-semibold"
               >
-                <option value="all">All Statuses</option>
-                <option value="Confirmed">Confirmed</option>
-                <option value="Checked In">Checked In</option>
-                <option value="Checked Out">Checked Out</option>
-                <option value="Cancelled">Cancelled</option>
+                <option value="all">{t('allStatuses', 'All Statuses')}</option>
+                <option value="Confirmed">{t('confirmed', 'Confirmed')}</option>
+                <option value="Checked-In">{t('checkedIn', 'Checked In')}</option>
+                <option value="Completed">{t('completed', 'Completed')}</option>
+                <option value="Cancelled">{t('cancelled', 'Cancelled')}</option>
               </select>
             </div>
           </div>
@@ -251,13 +252,13 @@ export const AdminDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) =
             <table className="w-full text-left text-xs">
               <thead className="bg-[#FAF7F2] text-[#6B5A48] uppercase tracking-wider font-bold border-b border-[#E8DFC8]">
                 <tr>
-                  <th className="p-3.5">Ref / Date</th>
-                  <th className="p-3.5">Guest & Contact</th>
-                  <th className="p-3.5">Room & Addons</th>
-                  <th className="p-3.5">Stay Dates</th>
-                  <th className="p-3.5">Total / Payment</th>
-                  <th className="p-3.5">Status</th>
-                  <th className="p-3.5 text-right">Actions</th>
+                  <th className="p-3.5">{t('refDateHeader', 'Ref / Date')}</th>
+                  <th className="p-3.5">{t('guestContactHeader', 'Guest & Contact')}</th>
+                  <th className="p-3.5">{t('roomAddonsHeader', 'Room & Addons')}</th>
+                  <th className="p-3.5">{t('stayDatesHeader', 'Stay Dates')}</th>
+                  <th className="p-3.5">{t('totalPaymentHeader', 'Total / Payment')}</th>
+                  <th className="p-3.5">{t('statusHeader', 'Status')}</th>
+                  <th className="p-3.5 text-right">{t('actionsHeader', 'Actions')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#EFE8DC]">
@@ -273,20 +274,20 @@ export const AdminDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) =
                       <p className="text-[10px] text-[#8C7B68]">{res.phone}</p>
                     </td>
                     <td className="p-3.5">
-                      <p className="font-medium text-[#2C241D]">{res.roomName}</p>
+                      <p className="font-medium text-[#2C241D]">{t(res.roomName, res.roomName)}</p>
                       <p className="text-[10px] text-[#8C7B68]">
-                        {res.adults} Adults {res.children > 0 ? `• ${res.children} Child` : ''}
-                        {res.selectedAddons.length > 0 ? ` • +${res.selectedAddons.length} Addons` : ''}
+                        {res.adults} {t('adults', 'Adults')} {res.children > 0 ? `• ${res.children} ${t('child', 'Child')}` : ''}
+                        {res.selectedAddons.length > 0 ? ` • +${res.selectedAddons.length} ${t('addons', 'Addons')}` : ''}
                       </p>
                     </td>
                     <td className="p-3.5">
-                      <p className="font-semibold text-[#2C241D]">{res.checkInDate} to {res.checkOutDate}</p>
-                      <span className="text-[10px] text-[#8C7B68]">{res.nights} Nights</span>
+                      <p className="font-semibold text-[#2C241D]">{res.checkInDate} {t('to', 'to')} {res.checkOutDate}</p>
+                      <span className="text-[10px] text-[#8C7B68]">{res.nights} {t('nights', 'Nights')}</span>
                     </td>
                     <td className="p-3.5">
                       <p className="font-bold text-[#2C241D]">{formatPrice(res.totalAmountPHP)}</p>
                       <span className="text-[10px] px-2 py-0.5 bg-green-100 text-green-800 rounded font-semibold">
-                        {res.paymentStatus} ({res.paymentMethod})
+                        {t(res.paymentStatus, res.paymentStatus)} ({t(res.paymentMethod, res.paymentMethod)})
                       </span>
                     </td>
                     <td className="p-3.5">
@@ -300,24 +301,24 @@ export const AdminDashboard: React.FC<{ onClose: () => void }> = ({ onClose }) =
                           'bg-red-50 text-red-700 border-red-200'
                         }`}
                       >
-                        <option value="Confirmed">Confirmed</option>
-                        <option value="Checked-In">Checked-In</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Cancelled">Cancelled</option>
+                        <option value="Confirmed">{t('confirmed', 'Confirmed')}</option>
+                        <option value="Checked-In">{t('checkedIn', 'Checked-In')}</option>
+                        <option value="Completed">{t('completed', 'Completed')}</option>
+                        <option value="Cancelled">{t('cancelled', 'Cancelled')}</option>
                       </select>
                     </td>
                     <td className="p-3.5 text-right">
                       <button
                         onClick={() => {
                           addNotification(
-                            `Guest Notes: #${res.referenceNumber}`,
-                            `Special Requests: ${res.specialRequests || 'None'} | Dietary: ${res.dietaryRequirements || 'None'} | Arrival: ${res.estimatedArrivalTime || 'Not specified'}`,
+                            `${t('guestNotes', 'Guest Notes')}: #${res.referenceNumber}`,
+                            `${t('specialRequestsLabel', 'Special Requests')}: ${res.specialRequests || t('none', 'None')} | ${t('dietaryLabel', 'Dietary')}: ${res.dietaryRequirements || t('none', 'None')} | ${t('arrivalLabel', 'Arrival')}: ${res.estimatedArrivalTime || t('notSpecified', 'Not specified')}`,
                             'booking'
                           );
                         }}
-                        className="px-2.5 py-1 bg-[#FAF7F2] hover:bg-[#EFE8DC] text-[#2C241D] font-bold rounded-lg border border-[#DDD0B9] transition text-[11px]"
+                        className="px-2.5 py-1 bg-[#FAF7F2] hover:bg-[#EFE8DC] text-[#2C241D] font-bold rounded-lg border border-[#DDD0B9] transition text-[11px] cursor-pointer"
                       >
-                        Notes
+                        {t('notes', 'Notes')}
                       </button>
                     </td>
                   </tr>
